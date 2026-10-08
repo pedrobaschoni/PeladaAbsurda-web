@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Pelada Absurda</title>
+  <meta name="description" content="Futebol de bonecos molengas onde as regras mudam no meio do jogo. Sozinho contra bots ou com até 4 amigos no mesmo PC.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Titan+One&family=Kanit:wght@500;600;700&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="app">
+  <div id="stage">
+    <canvas id="game" aria-label="Campo da pelada"></canvas>
+
+    <div id="hud" hidden>
+      <div class="board">
+        <div class="bt a">MANGA</div><div class="bs" id="sa">0</div>
+        <div class="bc" id="clock">3:00<small id="clocklab">TEMPO</small></div>
+        <div class="bs" id="sb">0</div><div class="bt b">AÇAÍ</div>
+      </div>
+      <div id="rulecard" class="sticker"><span class="lab" id="rlab">REGRA ATUAL</span><span class="rn" id="rname">Futebol normal… por enquanto</span><span class="rd" id="rdesc">A primeira regra absurda chega já já.</span><span class="rb"><i id="rbar"></i></span></div>
+      <div class="hud-tr">
+        <button class="iconbtn" id="b-music" aria-label="Música"></button>
+        <button class="iconbtn" id="b-mute" aria-label="Som"></button>
+        <button class="iconbtn" id="b-pause" aria-label="Pausar"><svg viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14" rx="1" fill="currentColor"/><rect x="14" y="5" width="4" height="14" rx="1" fill="currentColor"/></svg></button>
+      </div>
+      <div id="narr"><span class="who">NARRADOR</span><span class="say" id="narrtxt"></span></div>
+      <div id="keys"></div>
+      <div id="touch">
+        <button data-k="KeyA" style="left:1.2em;bottom:1.2em">◀</button>
+        <button data-k="KeyD" style="left:6.6em;bottom:1.2em">▶</button>
+        <button data-k="KeyG" style="right:12em;bottom:1.2em;font-size:.8em">CARRINHO</button>
+        <button data-k="KeyF" style="right:6.6em;bottom:1.2em">CHUTE</button>
+        <button data-k="KeyW" style="right:1.2em;bottom:4.2em">PULO</button>
+      </div>
+    </div>
+
+    <section class="screen" id="scr-menu">
+      <h1 class="logo"><span class="a">PELADA</span><span class="b">ABSURDA<em>!</em></span></h1>
+      <p class="tag">Futebol de bonecos molengas onde as regras mudam no meio do jogo. Gravidade da Lua, bola de boliche, chuva de melancia. Sozinho contra bots ou com até 4 amigos no mesmo PC.</p>
+      <div class="menu-btns">
+        <button class="btn go big" id="b-play">Montar o time</button>
+        <button class="btn" id="b-how">Como jogar</button>
+      </div>
+    </section>
+
+    <section class="screen" id="scr-lobby" hidden>
+      <div class="lobby-head">
+        <button class="btn small" id="b-lback">Voltar</button>
+        <h2 class="ttl">ESCALAÇÃO</h2>
+      </div>
+      <div class="lobby-grid">
+        <div class="team" id="team0" style="--tc:var(--manga);--tbg:#ffd7ad"><div class="team-name">TIME MANGA</div></div>
+        <div class="settings sticker">
+          <h3>Configuração da pelada</h3>
+          <div class="set"><label>Estádio</label>
+            <div class="stad"><canvas id="stadprev" width="224" height="126"></canvas><div><b id="stadname"></b><span id="stadesc"></span><div class="seg" style="margin-top:.35em"><button class="arrow" id="st-prev" aria-label="Estádio anterior">◀</button><button class="arrow" id="st-next" aria-label="Próximo estádio">▶</button></div></div></div>
+          </div>
+          <div class="set"><label>Duração</label><div class="seg" id="seg-dur"></div></div>
+          <div class="set"><label>Regra nova a cada</label><div class="seg" id="seg-rule"></div></div>
+          <div class="set"><label>Nível dos bots</label><div class="seg" id="seg-bot"></div></div>
+        </div>
+        <div class="team" id="team1" style="--tc:var(--acai);--tbg:#e3d3ff"><div class="team-name">TIME AÇAÍ</div></div>
+      </div>
+      <div class="lobby-foot">
+        <p id="lmsg">Clique no controle de cada vaga para escolher quem joga: teclado, controle, bot ou ninguém.</p>
+        <button class="btn go big" id="b-kickoff">Apitar início</button>
+      </div>
+    </section>
+
+    <section class="screen dim" id="scr-how" hidden>
+      <h2 class="ttl" style="font-size:2.4em">COMO JOGAR</h2>
+      <div class="howto sticker">
+        <table>
+          <tr><th></th><th>Andar</th><th>Pular</th><th>Chutar</th><th>Carrinho / peixinho</th></tr>
+          <tr><td><b>Teclado 1</b></td><td><kbd>A</kbd> <kbd>D</kbd></td><td><kbd>W</kbd></td><td><kbd>F</kbd> ou <kbd>Espaço</kbd></td><td><kbd>G</kbd> ou <kbd>S</kbd></td></tr>
+          <tr><td><b>Teclado 2</b></td><td><kbd>←</kbd> <kbd>→</kbd></td><td><kbd>↑</kbd></td><td><kbd>K</kbd> ou <kbd>Enter</kbd></td><td><kbd>L</kbd> ou <kbd>↓</kbd></td></tr>
+          <tr><td><b>Controle</b></td><td>Analógico ou direcional</td><td><kbd>A</kbd> / <kbd>✕</kbd></td><td><kbd>B</kbd> <kbd>X</kbd> / <kbd>○</kbd> <kbd>□</kbd></td><td><kbd>Y</kbd> <kbd>RB</kbd> / <kbd>△</kbd> <kbd>R1</kbd></td></tr>
+        </table>
+        <p><b>Chute no ar</b> com a bola acima da cabeça vira <b>bicicleta</b>, e a bola vai para trás. <b>Carrinho</b> derruba quem estiver na frente. No ar, o mesmo botão faz um <b>peixinho</b>, uma cabeçada voadora. Chutar um adversário também derruba ele.</p>
+        <p>A cada rodada o juiz sorteia uma <b>regra absurda</b>. Da metade do jogo em diante caem <b>duas regras de uma vez</b>. Empatou no fim? <b>Morte súbita</b>. <kbd>P</kbd> ou <kbd>Esc</kbd> pausa.</p>
+      </div>
+      <button class="btn go" id="b-howback">Entendi</button>
+    </section>
+
+    <section class="screen dim" id="scr-pause" hidden>
+      <h2 class="ttl" style="font-size:3em">PARALISADO</h2>
+      <div class="row"><button class="btn go" id="b-resume">Continuar</button><button class="btn" id="b-restart">Reiniciar</button><button class="btn" id="b-quit">Sair</button></div>
+    </section>
+
+    <section class="screen dim" id="scr-end" hidden>
+      <h2 class="ttl" id="e-title" style="font-size:2.8em">FIM DE JOGO</h2>
+      <div class="final"><span id="e-a" style="color:var(--manga)">0</span><span class="x">×</span><span id="e-b" style="color:var(--acai)">0</span></div>
+      <div class="awards" id="awards"></div>
+      <div class="row"><button class="btn go big" id="b-again">Revanche</button><button class="btn" id="b-elobby">Escalação</button><button class="btn" id="b-emenu">Menu</button></div>
+    </section>
+  </div>
+  <div id="rotate">Gire o celular para jogar na horizontal.</div>
+</div>
+
+<script src="js/game.js"></script>
+</body>
+</html>
